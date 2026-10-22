@@ -468,12 +468,12 @@ footer a:hover { color: var(--pink); }
 <script>
 /* ===== Launch settings: the only lines to edit =====
    STORE_URL      Chrome Web Store listing. Empty = pre-launch "Notify me" signup; set it = "Add to Chrome" everywhere.
-   SIGNUP_URL     Form endpoint that accepts a POST with an "email" field (Buttondown, Formspree, Kit, etc.).
+   BUTTONDOWN     Your Buttondown username. Empty = the signup form says the list isn't open yet.
    SUPPORT_URL    Where the footer "Support" link goes (e.g. mailto: address or a form). Empty = the FAQ.
    KOFI_URL       Ko-fi page. Empty = tip links stay hidden. */
 var CONFIG = {
   STORE_URL: "",
-  SIGNUP_URL: "",
+  BUTTONDOWN: "",
   SUPPORT_URL: "",
   KOFI_URL: ""
 };
@@ -518,25 +518,17 @@ var CONFIG = {
         input.focus();
         return;
       }
-      if (!CONFIG.SIGNUP_URL) {
-        status.textContent = "Preview only: the signup list isn't connected yet, so this address wasn't saved.";
+      if (!CONFIG.BUTTONDOWN) {
+        status.textContent = "The launch list isn't open yet. Please check back in a day or two.";
         return;
       }
-      var btn = form.querySelector("button");
-      btn.disabled = true;
-      var body = new FormData();
-      body.append("email", email);
-      fetch(CONFIG.SIGNUP_URL, { method: "POST", body: body, headers: { Accept: "application/json" } })
-        .then(function (r) {
-          if (!r.ok) throw new Error(r.status);
-          form.hidden = true;
-          status.className = "status ok";
-          status.textContent = "You're on the list. We'll email you the store link on launch day.";
-        })
-        .catch(function () {
-          status.textContent = "That didn't go through. Check your connection and try again.";
-        })
-        .then(function () { btn.disabled = false; });
+      // Buttondown's embed form: opens its confirmation page in a new tab.
+      form.action = "https://buttondown.com/api/emails/embed-subscribe/" + encodeURIComponent(CONFIG.BUTTONDOWN);
+      form.method = "post";
+      form.target = "_blank";
+      form.submit();
+      status.className = "status ok";
+      status.textContent = "Almost done: check your inbox and click the confirm link.";
     });
   });
 
