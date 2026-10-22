@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Clipspan – Video Looper &amp; Clip Recorder for Chrome (Free)</title>
+<meta name="description" content="Loop any part of any video with A-B repeat, then record that clip straight to MP4. Free Chrome extension for YouTube and most video sites.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Clipspan – Video Looper &amp; Clip Recorder for Chrome">
+<meta property="og:description" content="Loop any part of any video. Save it as an MP4. Free, no account, collects no data.">
+<!-- Add once the domain and 1200x630 share image exist:
+<link rel="canonical" href="https://clipspan.app/">
+<meta property="og:url" content="https://clipspan.app/">
+<meta property="og:image" content="https://clipspan.app/share.png">
+<meta name="twitter:card" content="summary_large_image"> -->
+<link rel="icon" type="image/png" sizes="32x32" href="icon32.png">
+<link rel="apple-touch-icon" href="icon128.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one column of full-width bands; the A–B loop bracket from the icon is the recurring motif. */
+:root {
+  --bg: #fbf7f8;
+  --surface: #ffffff;
+  --ink: #1c1418;
+  --muted: #6b5b63;
+  --line: #ecdfe4;
+  --pink: #e8336b;
+  --coral: #ff6a4d;
+  --on-accent: #ffffff;
+  --player: #141013;
+  --tint: #fdeef2;
+  --grad: linear-gradient(120deg, var(--pink), var(--coral));
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body: "Instrument Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --gutter-l: max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(16px, env(safe-area-inset-right, 0px));
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #120d10; --surface: #1c1519; --ink: #f6eef1; --muted: #b29fa8; --line: #33262d;
+    --pink: #ff4f82; --coral: #ff7d63; --on-accent: #1a0a10; --player: #0a0709; --tint: #261820;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #120d10; --surface: #1c1519; --ink: #f6eef1; --muted: #b29fa8; --line: #33262d;
+  --pink: #ff4f82; --coral: #ff7d63; --on-accent: #1a0a10; --player: #0a0709; --tint: #261820;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 1.0625rem/1.6 var(--body); }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--pink); outline-offset: 3px; border-radius: 6px; }
+
+.band { padding-left: var(--gutter-l); padding-right: var(--gutter-r); }
+.wrap { max-width: 1120px; margin: 0 auto; padding-block: clamp(56px, 9vw, 104px); }
+h1, h2, h3 { font-family: var(--display); line-height: 1.08; letter-spacing: -0.02em; text-wrap: balance; margin: 0; }
+h2 { font-size: clamp(1.9rem, 4.2vw, 2.9rem); font-weight: 700; }
+h3 { font-size: 1.2rem; font-weight: 700; letter-spacing: -0.01em; }
+p { margin: 0; }
+.lede { color: var(--muted); font-size: 1.15rem; max-width: 60ch; }
+.section-head { display: grid; gap: 14px; margin-bottom: 40px; max-width: 760px; }
+
+/* The bracket mark */
+.br { font-family: var(--display); font-weight: 800; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+kbd {
+  font: 500 0.82em var(--mono); padding: 2px 7px 3px; border-radius: 6px;
+  border: 1px solid var(--line); border-bottom-width: 2px; background: var(--surface); color: var(--ink); white-space: nowrap;
+}
+.tc { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+/* Top bar */
+.top .wrap { padding-block: 20px; display: flex; align-items: center; gap: 10px; }
+.logo { display: inline-flex; align-items: center; gap: 10px; font: 700 1.2rem var(--display); text-decoration: none; letter-spacing: -0.01em; }
+.logo img { width: 32px; height: 32px; border-radius: 8px; }
+
+/* Hero */
+.hero .wrap { padding-top: clamp(24px, 5vw, 56px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(32px, 5vw, 64px); align-items: center; }
+.hero h1 { font-size: clamp(2.5rem, 6.2vw, 4.6rem); font-weight: 800; letter-spacing: -0.035em; }
+.hero h1 .br { display: block; padding-right: .04em; }
+.hero .copy { display: grid; gap: 22px; min-width: 0; }
+.hero .lede { font-size: clamp(1.08rem, 1.6vw, 1.22rem); }
+
+/* CTA: a store button after launch, an email signup before */
+.cta { display: grid; gap: 10px; justify-items: start; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px; border: 0; cursor: pointer;
+  font: 600 1.05rem var(--body); color: var(--on-accent); background: var(--grad); text-decoration: none;
+  padding: 15px 24px; border-radius: 999px; box-shadow: 0 8px 24px -10px var(--pink);
+  transition: transform .15s ease, box-shadow .15s ease; white-space: nowrap;
+}
+.btn:hover { transform: translateY(-1px); box-shadow: 0 12px 28px -10px var(--pink); }
+.btn svg { width: 20px; height: 20px; flex: none; }
+.signup { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; max-width: 470px; }
+.signup input {
+  flex: 1 1 220px; min-width: 0; font: 400 1rem var(--body); color: var(--ink); background: var(--surface);
+  border: 1.5px solid var(--line); border-radius: 999px; padding: 14px 20px;
+}
+.signup input:focus { outline: none; border-color: var(--pink); }
+.signup .btn { flex: 0 0 auto; }
+.fine { font-size: .9rem; color: var(--muted); }
+.fine b { color: var(--ink); font-weight: 600; }
+.status { font-size: .95rem; font-weight: 500; min-height: 1.5em; }
+.status.ok { color: var(--pink); }
+
+/* Player mock: echoes the real Clipspan panel */
+.player {
+  position: relative; border-radius: 18px; overflow: hidden; background: var(--player);
+  aspect-ratio: 16 / 10; max-width: 100%; box-shadow: 0 30px 60px -30px rgba(40, 8, 20, .55); isolation: isolate;
+}
+.scene { position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(60% 70% at 72% 38%, rgba(255,106,77,.55), transparent 70%),
+    radial-gradient(50% 60% at 25% 70%, rgba(232,51,107,.5), transparent 70%),
+    linear-gradient(160deg, #2a1420, #0d090b);
+}
+.strings { position: absolute; inset: 0; z-index: -1; opacity: .35;
+  background: repeating-linear-gradient(172deg, transparent 0 34px, rgba(255,255,255,.5) 34px 35px);
+  mask-image: linear-gradient(90deg, transparent, #000 30%, #000 70%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 30%, #000 70%, transparent);
+}
+.panel {
+  position: absolute; top: 14px; left: 14px; right: 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+  padding: 10px 12px; border-radius: 12px; background: rgba(20,20,20,.85); color: #fff; font: 500 .82rem var(--body);
+  backdrop-filter: blur(6px);
+}
+.panel .name { font-weight: 700; margin-right: 4px; }
+.panel .field { display: inline-flex; align-items: center; gap: 6px; color: #c9d6ea; }
+.panel .field span { font: 500 .8rem var(--mono); color: #fff; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25); border-radius: 6px; padding: 3px 7px; }
+.panel .pbtn { border-radius: 999px; padding: 4px 11px; font-weight: 600; font-size: .78rem; }
+.pbtn.loop { background: #3ea6ff; color: #04121f; }
+.pbtn.rec { background: #ff4e45; color: #fff; display: inline-flex; align-items: center; gap: 6px; }
+.pbtn.rec::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #fff; animation: blink 1.2s steps(2, start) infinite; }
+.panel .time { margin-left: auto; font: 500 .8rem var(--mono); color: #fff; font-variant-numeric: tabular-nums; }
+.bar { position: absolute; left: 16px; right: 16px; bottom: 18px; height: 34px; }
+.track { position: absolute; left: 0; right: 0; top: 15px; height: 4px; border-radius: 4px; background: rgba(255,255,255,.25); }
+.span { position: absolute; top: 9px; height: 16px; left: 38%; width: 22%; background: rgba(255,79,130,.28); }
+.span::before, .span::after {
+  content: ""; position: absolute; top: -4px; bottom: -4px; width: 8px; border: 3px solid #ff5d86;
+}
+.span::before { left: -3px; border-right: 0; border-radius: 3px 0 0 3px; }
+.span::after { right: -3px; border-left: 0; border-radius: 0 3px 3px 0; }
+.head { position: absolute; top: 10px; width: 14px; height: 14px; margin-left: -7px; border-radius: 50%; background: #fff; left: 38%;
+  box-shadow: 0 0 0 4px rgba(255,255,255,.18); animation: loop 4.4s linear infinite; }
+.labels { position: absolute; top: -18px; left: 38%; width: 22%; display: flex; justify-content: space-between; font: 500 .72rem var(--mono); color: #fff; }
+.labels span { transform: translateX(-50%); }
+.labels span:last-child { transform: translateX(50%); }
+@keyframes loop { from { left: 38%; } to { left: 60%; } }
+@keyframes blink { to { opacity: .2; } }
+.saved {
+  position: absolute; right: 16px; bottom: 64px; display: inline-flex; align-items: center; gap: 8px;
+  background: #fff; color: #1c1418; border-radius: 10px; padding: 8px 12px; font: 600 .8rem var(--body);
+  box-shadow: 0 10px 24px -10px rgba(0,0,0,.6);
+}
+.saved small { font: 500 .72rem var(--mono); color: #6b5b63; }
+.saved i { width: 26px; height: 26px; border-radius: 6px; background: var(--grad); display: grid; place-items: center; color: #fff; font-style: normal; font-size: .7rem; }
+
+/* Problem line */
+.problem { background: var(--tint); }
+.problem .wrap { padding-block: clamp(40px, 6vw, 64px); }
+.problem p { font: 600 clamp(1.35rem, 2.8vw, 2rem)/1.3 var(--display); letter-spacing: -0.015em; max-width: 34ch; text-wrap: balance; }
+.problem em { font-style: normal; color: var(--pink); }
+
+/* How it works */
+.how-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 56px); align-items: center; }
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 26px; counter-reset: step; }
+.steps li { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 16px; align-items: start; counter-increment: step; }
+.steps li::before {
+  content: "[" counter(step) "]"; font: 800 1.35rem/1 var(--display); background: var(--grad);
+  -webkit-background-clip: text; background-clip: text; color: transparent; padding-top: 3px;
+}
+.steps h3 { margin-bottom: 4px; }
+.steps p { color: var(--muted); }
+.how .cta { margin-top: 36px; }
+.demo-slot { display: grid; gap: 10px; }
+.demo-slot .player { aspect-ratio: 16 / 9; }
+
+/* Benefits */
+.benefits { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 28px; display: grid; gap: 10px; align-content: start; }
+.card p { color: var(--muted); }
+.card .keys { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.formats { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.formats span { font: 500 .8rem var(--mono); padding: 2px 8px; border-radius: 6px; background: var(--tint); color: var(--ink); }
+
+/* Who it's for */
+.who { background: var(--surface); border-block: 1px solid var(--line); }
+.people { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0; border-top: 1px solid var(--line); }
+.people li { padding: 22px 20px 22px 0; border-bottom: 1px solid var(--line); display: grid; gap: 6px; }
+.people b { font: 700 1.15rem var(--display); letter-spacing: -0.01em; }
+.people span { color: var(--muted); }
+.people .lead b { color: var(--pink); }
+
+/* Compare table */
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
+table { width: 100%; min-width: 560px; border-collapse: collapse; font-size: 1rem; }
+th, td { text-align: left; padding: 16px 20px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+thead th { font: 600 .82rem var(--body); text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
+tbody th { font-weight: 600; }
+td { color: var(--muted); }
+.us { background: var(--tint); color: var(--ink); font-weight: 600; }
+thead .us { color: var(--pink); }
+.yes::before { content: "✓ "; color: var(--pink); font-weight: 700; }
+.no::before { content: "— "; }
+
+/* Proof + privacy */
+.duo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; }
+.maker { display: grid; gap: 18px; align-content: start; }
+.maker blockquote { margin: 0; font: 500 clamp(1.2rem, 2.2vw, 1.5rem)/1.4 var(--display); letter-spacing: -0.01em; }
+.maker cite { font-style: normal; color: var(--muted); font-size: .95rem; }
+.facts { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.facts li { font-weight: 600; font-size: .95rem; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); }
+.privacy { background: var(--player); color: #f6eef1; border-color: transparent; }
+.privacy p { color: #d9c9d0; }
+.privacy .note { font-size: .92rem; color: #b29fa8; border-top: 1px solid rgba(255,255,255,.14); padding-top: 14px; }
+
+/* FAQ */
+.faq { display: grid; gap: 0; max-width: 820px; border-top: 1px solid var(--line); }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary { cursor: pointer; list-style: none; padding: 20px 40px 20px 0; position: relative; font: 600 1.12rem var(--display); letter-spacing: -0.01em; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; position: absolute; right: 6px; top: 16px; font: 500 1.5rem var(--body); color: var(--pink); transition: transform .2s ease; }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq details p { padding: 0 0 22px; color: var(--muted); max-width: 64ch; }
+
+/* Final CTA */
+.final { background: var(--player); color: #fff; }
+.final .wrap { display: grid; gap: 20px; justify-items: center; text-align: center; }
+.final h2 { font-size: clamp(2.2rem, 6vw, 4rem); font-weight: 800; letter-spacing: -0.03em; }
+.final p.lede { color: #d9c9d0; }
+.final .cta { justify-items: center; }
+.final .signup { justify-content: center; }
+.final .signup input { background: #1f171b; border-color: #3a2b33; color: #fff; }
+.final .fine { color: #b29fa8; }
+.final .fine b { color: #fff; }
+.final .status.ok { color: #ff7d9e; }
+
+footer .wrap { padding-block: 28px; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; color: var(--muted); font-size: .92rem; }
+footer nav { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+footer a { text-decoration: none; }
+footer a:hover { color: var(--pink); }
+
+@media (max-width: 860px) {
+  .hero .wrap, .how-grid, .duo { grid-template-columns: minmax(0, 1fr); }
+  .benefits { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 520px) {
+  .panel { font-size: .74rem; gap: 6px; top: 10px; left: 10px; right: 10px; padding: 8px 10px; }
+  .panel .time { display: none; }
+  .saved { display: none; }
+  .signup .btn { flex: 1 1 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .head, .pbtn.rec::before { animation: none; }
+  .btn { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="band top">
+  <div class="wrap">
+    <a class="logo" href="#top" id="top"><img src="icon128.png" alt="" width="32" height="32">Clipspan</a>
+  </div>
+</header>
+
+<main>
+  <section class="band hero" aria-labelledby="hero-title">
+    <div class="wrap">
+      <div class="copy">
+        <h1 id="hero-title">Loop any part of any video. <span class="br">Save it as an MP4.</span></h1>
+        <p class="lede">Clipspan is a free Chrome extension that repeats the exact stretch you pick, on YouTube and most video sites, then records just that clip to MP4 in one click.</p>
+        <div class="cta" data-cta></div>
+      </div>
+
+      <!-- Swap this mock for the real 6–8 s muted looping clip once recorded:
+           <video autoplay muted loop playsinline poster="hero.jpg" src="hero.mp4"></video> -->
+      <div class="player" role="img" aria-label="Clipspan's panel on a video, looping the stretch from 1:23 to 1:45 and saving it as an MP4">
+        <div class="scene"></div><div class="strings"></div>
+        <div class="panel" aria-hidden="true">
+          <span class="name">Clipspan</span>
+          <span class="field">Start <span>1:23</span></span>
+          <span class="field">End <span>1:45</span></span>
+          <span class="pbtn loop">Loop</span>
+          <span class="pbtn rec">Record</span>
+          <span class="time" data-clock>1:23 / 4:12</span>
+        </div>
+        <div class="saved" aria-hidden="true"><i>MP4</i><span>Saved to Downloads<br><small>clipspan-1m23s-1m45s.mp4</small></span></div>
+        <div class="bar" aria-hidden="true">
+          <div class="track"></div>
+          <div class="labels"><span>1:23</span><span>1:45</span></div>
+          <div class="span"></div>
+          <div class="head"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band problem" aria-label="The problem">
+    <div class="wrap">
+      <p>Dragging the scrubber back for the tenth time to catch one riff, one phrase or one move? <em>Clipspan does the rewinding for you.</em></p>
+    </div>
+  </section>
+
+  <section class="band how" id="how" aria-labelledby="how-title">
+    <div class="wrap">
+      <div class="how-grid">
+        <div>
+          <div class="section-head">
+            <h2 id="how-title">Three steps, no settings</h2>
+          </div>
+          <ol class="steps">
+            <li><div><h3>Open</h3><p>On any page with a video, press <kbd data-mod>Alt+G</kbd> or click the Clipspan icon.</p></div></li>
+            <li><div><h3>Pick the stretch</h3><p>Type a start and end time, like <span class="tc">1:23</span> and <span class="tc">1:45</span>, and press Enter.</p></div></li>
+            <li><div><h3>Loop or record</h3><p>Press Loop to repeat it, or Record to save it as an MP4.</p></div></li>
+          </ol>
+          <div class="cta" data-cta></div>
+        </div>
+        <!-- Demo slot: replace with the 30–60 s store demo video when it exists. Section heading then becomes "See it in 40 seconds". -->
+        <div class="demo-slot">
+          <div class="player" role="img" aria-label="A video with the stretch from 1:23 to 1:45 marked as a loop">
+            <div class="scene"></div><div class="strings"></div>
+            <div class="panel" aria-hidden="true">
+              <span class="name">Clipspan</span>
+              <span class="field">Start <span>1:23</span></span>
+              <span class="field">End <span>1:45</span></span>
+              <span class="pbtn loop">Loop</span>
+            </div>
+            <div class="bar" aria-hidden="true">
+              <div class="track"></div>
+              <div class="labels"><span>1:23</span><span>1:45</span></div>
+              <div class="span"></div>
+              <div class="head"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="benefits-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="benefits-title">A looper and a recorder in one</h2>
+      </div>
+      <div class="benefits">
+        <article class="card">
+          <h3>Loop any stretch, on almost any site</h3>
+          <p>A-B repeat on YouTube, course platforms, news sites and most pages with a standard web video player. Not just YouTube.</p>
+        </article>
+        <article class="card">
+          <h3>Record the video, not your screen</h3>
+          <p>Clipspan captures the video and its sound straight from the player. No screen-share picker, no tabs or buttons in the shot, no cropping afterwards.</p>
+        </article>
+        <article class="card">
+          <h3>MP4 that plays everywhere</h3>
+          <p>Clips save as MP4 (H.264 and AAC), ready for your phone, your editor or a social post. Or skip the times and just press Record now and Stop when you're done, even on a live stream.</p>
+        </article>
+        <article class="card">
+          <h3>Fast with the keyboard</h3>
+          <p>Shortcuts work on any keyboard layout. <span data-mac-note>On a Mac, use Option instead of Alt.</span></p>
+          <div class="keys"><kbd data-mod>Alt+G</kbd><span class="fine">open</span> <kbd data-mod>Alt+L</kbd><span class="fine">loop</span> <kbd data-mod>Alt+R</kbd><span class="fine">record</span> <kbd>R</kbd><span class="fine">restart</span></div>
+          <div class="formats" aria-label="Time formats Clipspan understands"><span>1:23:45</span><span>12:30</span><span>90</span><span>2m30s</span><span>1h2m3s</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band who" aria-labelledby="who-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="who-title">Made for people who replay things</h2>
+      </div>
+      <ul class="people">
+        <li class="lead"><b>Musicians</b><span>learning a riff or a solo, bar by bar.</span></li>
+        <li><b>Language learners</b><span>drilling one phrase until it sticks.</span></li>
+        <li><b>Dancers and athletes</b><span>studying a move frame by frame.</span></li>
+        <li><b>Students</b><span>replaying the part of the lecture that matters.</span></li>
+        <li><b>Creators</b><span>saving a clip to react to, quote or edit.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="compare-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="compare-title">Most tools do one half</h2>
+        <p class="lede">Loopers can't save the clip. Screen recorders grab the whole tab. Clipspan does both.</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th scope="col"><span class="sr" hidden>Feature</span></th><th scope="col">Most YouTube loopers</th><th scope="col">Most screen recorders</th><th scope="col" class="us">Clipspan</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Loop a stretch</th><td class="yes">Yes</td><td class="no">No</td><td class="us yes">Yes</td></tr>
+            <tr><th scope="row">Works beyond YouTube</th><td class="no">Mostly no</td><td class="yes">Yes</td><td class="us yes">Yes</td></tr>
+            <tr><th scope="row">Records just the video</th><td class="no">No</td><td class="no">No, the whole tab or screen</td><td class="us yes">Yes</td></tr>
+            <tr><th scope="row">Saves MP4</th><td class="no">No</td><td>Sometimes, often paid</td><td class="us yes">Yes, free</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" aria-label="About Clipspan and privacy">
+    <div class="wrap" style="padding-top:0">
+      <div class="duo">
+        <div class="card maker">
+          <!-- Placeholder maker note: replace with Steven's real reason before launch. Add real beta quotes (with permission) below it. -->
+          <blockquote>"I built Clipspan because I was tired of dragging the scrubber back to learn guitar parts."</blockquote>
+          <cite>Steven, maker of Clipspan</cite>
+          <ul class="facts"><li>Free</li><li>No account</li><li>Collects no data</li></ul>
+        </div>
+        <div class="card privacy" id="privacy">
+          <h3>Your clips stay on your computer</h3>
+          <p>Clipspan collects no data and sends nothing anywhere. Looping and recording happen inside your browser, and clips go straight to your Downloads folder.</p>
+          <!-- Remove this note if the extension switches to activeTab. -->
+          <p class="note">Chrome will say Clipspan can "read and change data on websites". That is how it finds the video on the page you're watching. It doesn't read or send anything else.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="faq" aria-labelledby="faq-title">
+    <div class="wrap" style="padding-top:0">
+      <div class="section-head"><h2 id="faq-title">Questions</h2></div>
+      <div class="faq">
+        <details id="faq-free"><summary>Is Clipspan free?</summary><p>Yes. Everything is free. <span data-kofi-line hidden>If it saves you time, there's an optional tip jar on <a data-kofi href="#">Ko-fi</a>.</span></p></details>
+        <details id="faq-sites"><summary>Which sites does it work on?</summary><p>YouTube and most sites that use a standard web video player, including course platforms and news sites.</p></details>
+        <details id="faq-drm"><summary>Can I record Netflix or other streaming services?</summary><p>No. DRM-protected video can't be recorded. Only record videos you have the right to keep.</p></details>
+        <details id="faq-live"><summary>Does it work on live streams?</summary><p>Yes. Leave the Start and End fields empty, press Record to capture what's playing right now, and press Stop to download the clip.</p></details>
+        <details id="faq-need"><summary>What do I need?</summary><p>Chrome 126 or newer, which can record MP4 directly.</p></details>
+        <details id="faq-mac"><summary>Is there a Mac or Windows difference?</summary><p>It works the same in Chrome on Windows, Mac, Linux and ChromeOS. On a Mac, use Option instead of Alt: Option+G opens Clipspan, Option+L loops and Option+R records.</p></details>
+        <details id="faq-speed"><summary>Does it slow down my browser?</summary><p>Clipspan does nothing until you press <kbd data-mod>Alt+G</kbd> or click its icon.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="band final" aria-labelledby="final-title">
+    <div class="wrap">
+      <h2 id="final-title"><span class="br">[</span> Stop rewinding. Start looping. <span class="br">]</span></h2>
+      <p class="lede" data-final-line>Add Clipspan to Chrome in two clicks. Free, no account, no data collected.</p>
+      <div class="cta" data-cta></div>
+    </div>
+  </section>
+</main>
+
+<footer class="band">
+  <div class="wrap">
+    <span>Clipspan is an independent project.</span>
+    <nav aria-label="Footer">
+      <a href="#privacy">Privacy policy</a>
+      <a href="#faq" data-support>Support</a>
+      <a data-kofi href="#" hidden>Tip on Ko-fi</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+/* ===== Launch settings: the only lines to edit =====
+   STORE_URL      Chrome Web Store listing. Empty = pre-launch "Notify me" signup; set it = "Add to Chrome" everywhere.
+   SIGNUP_URL     Form endpoint that accepts a POST with an "email" field (Buttondown, Formspree, Kit, etc.).
+   SUPPORT_URL    Where the footer "Support" link goes (e.g. mailto: address or a form). Empty = the FAQ.
+   KOFI_URL       Ko-fi page. Empty = tip links stay hidden. */
+var CONFIG = {
+  STORE_URL: "",
+  SIGNUP_URL: "",
+  SUPPORT_URL: "",
+  KOFI_URL: ""
+};
+
+(function () {
+  var chromeIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="currentColor"/><path d="M12 8h9M8.5 14 4 6.2M15.5 14 11 21.8" stroke="currentColor" stroke-width="2" fill="none"/></svg>';
+  var launched = !!CONFIG.STORE_URL;
+  var n = 0;
+
+  document.querySelectorAll("[data-cta]").forEach(function (slot) {
+    n++;
+    if (launched) {
+      slot.innerHTML = '<a class="btn" href="' + CONFIG.STORE_URL + '" rel="noopener">' + chromeIcon + "Add to Chrome, it's free</a>" +
+        '<p class="fine"><b>Free</b> · No account · Collects no data</p>';
+      return;
+    }
+    var id = "email-" + n;
+    slot.innerHTML =
+      '<form class="signup" novalidate>' +
+        '<label for="' + id + '" hidden>Email address</label>' +
+        '<input id="' + id + '" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>' +
+        '<button class="btn" type="submit">Notify me at launch</button>' +
+      '</form>' +
+      '<p class="fine">Coming soon to the Chrome Web Store. <b>Free</b> · No account · Collects no data</p>' +
+      '<p class="status" role="status" aria-live="polite"></p>';
+  });
+
+  if (!launched) {
+    var fl = document.querySelector("[data-final-line]");
+    if (fl) fl.textContent = "Get one email with the Chrome Web Store link the day Clipspan launches. Free, no account, no data collected.";
+  }
+
+  document.querySelectorAll(".signup").forEach(function (form) {
+    var status = form.parentNode.querySelector(".status");
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var input = form.querySelector("input");
+      var email = input.value.trim();
+      status.className = "status";
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        status.textContent = "Enter an email address like you@example.com.";
+        input.focus();
+        return;
+      }
+      if (!CONFIG.SIGNUP_URL) {
+        status.textContent = "Preview only: the signup list isn't connected yet, so this address wasn't saved.";
+        return;
+      }
+      var btn = form.querySelector("button");
+      btn.disabled = true;
+      var body = new FormData();
+      body.append("email", email);
+      fetch(CONFIG.SIGNUP_URL, { method: "POST", body: body, headers: { Accept: "application/json" } })
+        .then(function (r) {
+          if (!r.ok) throw new Error(r.status);
+          form.hidden = true;
+          status.className = "status ok";
+          status.textContent = "You're on the list. We'll email you the store link on launch day.";
+        })
+        .catch(function () {
+          status.textContent = "That didn't go through. Check your connection and try again.";
+        })
+        .then(function () { btn.disabled = false; });
+    });
+  });
+
+  if (CONFIG.SUPPORT_URL) document.querySelectorAll("[data-support]").forEach(function (a) { a.href = CONFIG.SUPPORT_URL; });
+  if (CONFIG.KOFI_URL) {
+    document.querySelectorAll("[data-kofi]").forEach(function (a) { a.href = CONFIG.KOFI_URL; a.rel = "noopener"; a.hidden = false; });
+    document.querySelectorAll("[data-kofi-line]").forEach(function (s) { s.hidden = false; });
+  }
+
+  // Show Mac shortcuts to Mac visitors.
+  var isMac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
+  if (isMac) {
+    document.querySelectorAll("kbd[data-mod]").forEach(function (k) { k.textContent = k.textContent.replace("Alt+", "Option+"); });
+    document.querySelectorAll("[data-mac-note]").forEach(function (s) { s.hidden = true; });
+  }
+
+  // Keep the hero clock in step with the looping playhead (1:23 → 1:45 every 4.4 s).
+  var clock = document.querySelector("[data-clock]");
+  if (clock && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    var t0 = performance.now();
+    var tick = function (now) {
+      var s = 83 + Math.floor(((now - t0) % 4400) / 4400 * 22);
+      clock.textContent = Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0") + " / 4:12";
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+})();
+</script>
+</body>
+</html>
