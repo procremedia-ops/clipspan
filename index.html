@@ -422,7 +422,8 @@ footer a:hover { color: var(--pink); }
         </div>
         <div class="card privacy" id="privacy">
           <h3>Your clips stay on your computer</h3>
-          <p>Clipspan collects no data and sends nothing anywhere. Looping and recording happen inside your browser, and clips go straight to your Downloads folder.</p>
+          <p>The Clipspan extension collects no data and sends nothing anywhere. Looping and recording happen inside your browser, and clips go straight to your Downloads folder.</p>
+          <p>Launch email signup is separate: your email is sent to Buttondown for launch notifications.</p>
           <!-- Remove this note if the extension switches to activeTab. -->
           <p class="note">Chrome will say Clipspan can "read and change data on websites". That is how it finds the video on the page you're watching. It doesn't read or send anything else.</p>
         </div>
@@ -494,16 +495,17 @@ var CONFIG = {
     slot.innerHTML =
       '<form class="signup" novalidate>' +
         '<label for="' + id + '" hidden>Email address</label>' +
-        '<input id="' + id + '" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>' +
+        '<input id="' + id + '" aria-describedby="' + id + '-privacy ' + id + '-status" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>' +
         '<button class="btn" type="submit">Notify me at launch</button>' +
       '</form>' +
-      '<p class="fine">Coming soon to the Chrome Web Store. <b>Free</b> · No account · Collects no data</p>' +
-      '<p class="status" role="status" aria-live="polite"></p>';
+      '<p class="fine">Coming soon to the Chrome Web Store. <b>Free</b> · No account needed for the extension</p>' +
+      '<p class="fine" id="' + id + '-privacy">Your email is sent to Buttondown for launch notifications. The Clipspan extension collects no data. Continue on Buttondown to finish signing up.</p>' +
+      '<p class="status" id="' + id + '-status" role="status" aria-live="polite"></p>';
   });
 
   if (!launched) {
     var fl = document.querySelector("[data-final-line]");
-    if (fl) fl.textContent = "Get one email with the Chrome Web Store link the day Clipspan launches. Free, no account, no data collected.";
+    if (fl) fl.textContent = "Get one email with the Chrome Web Store link the day Clipspan launches. The extension is free and needs no account.";
   }
 
   document.querySelectorAll(".signup").forEach(function (form) {
@@ -522,13 +524,17 @@ var CONFIG = {
         status.textContent = "The launch list isn't open yet. Please check back in a day or two.";
         return;
       }
-      // Buttondown's embed form: opens its confirmation page in a new tab.
+      // Navigate to Buttondown so its response shows whether signup succeeded.
+      input.value = email;
       form.action = "https://buttondown.com/api/emails/embed-subscribe/" + encodeURIComponent(CONFIG.BUTTONDOWN);
       form.method = "post";
-      form.target = "_blank";
-      form.submit();
-      status.className = "status ok";
-      status.textContent = "Almost done: check your inbox and click the confirm link.";
+      form.target = "_self";
+      status.textContent = "Continuing to Buttondown to finish signup…";
+      try {
+        form.submit();
+      } catch (error) {
+        status.textContent = "Could not open Buttondown. Please try again.";
+      }
     });
   });
 
