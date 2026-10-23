@@ -288,7 +288,23 @@ footer a:hover { color: var(--pink); }
 .guitar-neck { position:absolute; top:15%; left:7%; width:75%; height:18%; background:repeating-linear-gradient(90deg,transparent 0 9%,#c1b09a 9% 9.6%),linear-gradient(#382a22,#755336,#33261f); transform:rotate(29deg); transform-origin:left; border:3px solid #ad8858; }
 .guitar-strings { position:absolute; top:18%; left:7%; width:95%; height:12%; background:repeating-linear-gradient(0deg,transparent 0 16%,#d5c5a1 16% 18%); transform:rotate(29deg); transform-origin:left; opacity:.65; }
 .yt-lesson { position:absolute; top:8%; left:6%; color:#fff6e8; font-size:clamp(.65rem,1.25vw,1rem); font-weight:700; line-height:1.2; letter-spacing:.05em; text-shadow:0 2px 10px #0008; }
-.clipspan-panel { position:absolute; left:3%; bottom:9%; width:94%; height:auto; filter:drop-shadow(0 8px 12px #0006); }
+.how-grid { grid-template-columns: minmax(0, .85fr) minmax(0, 1.25fr); }
+.clipspan-live-panel { position:absolute; left:3%; right:3%; bottom:13%; padding:clamp(8px,1.25vw,16px); border-radius:14px; background:rgba(28,27,26,.92); color:#fff; box-shadow:0 10px 24px #0005; font-family:Arial,sans-serif; container-type:inline-size; }
+.cp-top { display:flex; justify-content:space-between; align-items:center; color:#c5d0df; font-size:2.7cqw; margin-bottom:3cqw; }
+.cp-top b { letter-spacing:.06em; }
+.cp-logo { display:inline-block; background:#ef4080; border-radius:5px; color:#fff; padding:.3em; margin-right:.4em; }
+.cp-fields { display:flex; align-items:center; gap:2cqw; font-size:4.5cqw; }
+.cp-input { flex:1; display:flex; justify-content:space-between; align-items:center; min-width:0; color:#888; background:#111; border:2px solid #626262; border-radius:10px; padding:1cqw 1.6cqw; font-size:4cqw; }
+.cp-input small { font-size:2cqw; line-height:1; color:#aaa; }
+.cp-dash { color:#888; }
+.cp-tools { display:flex; align-items:center; justify-content:space-between; gap:1.8cqw; margin-top:2.5cqw; font-size:3.6cqw; }
+.cp-tools b { font-size:2.9cqw; white-space:nowrap; }
+.cp-loop { color:#ef4080; font-size:4.5cqw; }
+.cp-step { background:#111; border:1px solid #666; border-radius:7px; padding:.5cqw 1.8cqw; }
+.cp-tools .cp-record { color:#ff655e; }
+.cp-time { font-size:3cqw; color:#ddd; white-space:nowrap; }
+.cp-reset { margin-left:auto; }
+@media(max-width:860px) { .how-grid { grid-template-columns:minmax(0,1fr); } }
 .yt-controls { position:absolute; bottom:0; left:0; right:0; padding:12px 10px 8px; background:linear-gradient(transparent,#000b); display:flex; justify-content:space-between; gap:8px; font-size:9px; }
 .yt-progress { position:absolute; top:6px; left:10px; right:10px; height:2px; background:#777; }
 .yt-progress::before { content:""; display:block; width:13%; height:100%; background:#f03; }
@@ -369,13 +385,17 @@ footer a:hover { color: var(--pink); }
               <div class="yt-video">
                 <div class="guitar-art"><div class="guitar-body"></div><div class="guitar-neck"></div><div class="guitar-strings"></div></div>
                 <span class="yt-lesson">ONE RIFF.<br>AS MANY REPLAYS<br>AS YOU NEED.</span>
-                <img class="clipspan-panel" src="assets/clipspan-panel.png" alt="" width="1984" height="793" loading="lazy">
-                <div class="yt-controls"><div class="yt-progress"></div><span>▶ &nbsp; ▷ &nbsp; ◖ &nbsp; 1:16 / 10:13</span><span>⚙ &nbsp; ⛶</span></div>
+                <div class="clipspan-live-panel">
+                  <div class="cp-top"><b><span class="cp-logo">[▸]</span> CLIPSPAN</b><span>❤️ Donate &nbsp; ⌨ &nbsp; ◉</span></div>
+                  <div class="cp-fields"><span class="cp-input">Start <small>▴<br>▾</small></span><span>⚑</span><span class="cp-dash">–</span><span class="cp-input">End <small>▴<br>▾</small></span><span>⚑</span><span>→</span></div>
+                  <div class="cp-tools"><b>−1s</b><b>Ⅱ</b><b>+1s</b><span class="cp-loop">◴</span><b class="cp-step">1s</b><span>⇄</span><span class="cp-record">●</span><span class="cp-time">6:19 / 45:08</span><span class="cp-reset">⟲</span><span>×</span></div>
+                </div>
+                <div class="yt-controls"><div class="yt-progress"></div><span>▶ &nbsp; ▷ &nbsp; ◖ &nbsp; 6:19 / 45:08</span><span>⚙ &nbsp; ⛶</span></div>
               </div>
               <div class="yt-below"><strong>Guitar practice · learn one riff at a time</strong><div><span class="yt-channel"></span><span>Practice session</span><span class="yt-pill">Subscribe</span></div></div>
             </div>
           </div>
-          <figcaption class="fine">The Clipspan panel, shown on an illustrative YouTube page. Loop and record without leaving your video.</figcaption>
+          <figcaption class="fine">A preview of the updated Clipspan controls on an illustrative YouTube page. Pick a stretch, loop it, or record it without leaving your video.</figcaption>
         </figure>
       </div>
     </div>
