@@ -218,6 +218,13 @@ thead .us { color: var(--pink); }
 .maker blockquote { margin: 0; font: 500 clamp(1.2rem, 2.2vw, 1.5rem)/1.4 var(--display); letter-spacing: -0.01em; }
 .maker cite { font-style: normal; color: var(--muted); font-size: .95rem; }
 .facts { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.donate { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px; font: 600 .98rem var(--body); color: var(--pink); text-decoration: none;
+  padding: 10px 18px; border-radius: 999px; border: 1.5px solid var(--pink); background: transparent; transition: background .15s ease;
+}
+.btn-ghost:hover { background: var(--tint); }
+.btn-ghost svg { width: 18px; height: 18px; flex: none; }
 .facts li { font-weight: 600; font-size: .95rem; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); }
 .privacy { background: var(--player); color: #f6eef1; border-color: transparent; }
 .privacy p { color: #d9c9d0; }
@@ -419,6 +426,7 @@ footer a:hover { color: var(--pink); }
           <blockquote>"I built Clipspan because I was tired of dragging the scrubber back to learn guitar parts."</blockquote>
           <cite>Steven, maker of Clipspan</cite>
           <ul class="facts"><li>Free</li><li>No account</li><li>Collects no data</li></ul>
+          <p class="donate" data-kofi-line hidden><a class="btn-ghost" data-kofi href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.6-7.5 10.2-7.5 10.2z" fill="currentColor"/></svg>Donate to Clipspan</a><span class="fine">Optional. Opens Ko-fi.</span></p>
         </div>
         <div class="card privacy" id="privacy">
           <h3>Your clips stay on your computer</h3>
@@ -460,7 +468,7 @@ footer a:hover { color: var(--pink); }
     <nav aria-label="Footer">
       <a href="privacy.html">Privacy policy</a>
       <a href="#faq" data-support>Support</a>
-      <a data-kofi href="#" hidden>Tip on Ko-fi</a>
+      <a data-kofi href="#" hidden>Donate on Ko-fi</a>
     </nav>
   </div>
 </footer>
@@ -475,7 +483,7 @@ var CONFIG = {
   STORE_URL: "",
   BUTTONDOWN: "clipspan",
   SUPPORT_URL: "",
-  KOFI_URL: ""
+  KOFI_URL: "https://ko-fi.com/procremedia"
 };
 
 (function () {
@@ -538,7 +546,7 @@ var CONFIG = {
 
   if (CONFIG.SUPPORT_URL) document.querySelectorAll("[data-support]").forEach(function (a) { a.href = CONFIG.SUPPORT_URL; });
   if (CONFIG.KOFI_URL) {
-    document.querySelectorAll("[data-kofi]").forEach(function (a) { a.href = CONFIG.KOFI_URL; a.rel = "noopener"; a.hidden = false; });
+    document.querySelectorAll("[data-kofi]").forEach(function (a) { a.href = CONFIG.KOFI_URL; a.target = "_blank"; a.rel = "noopener"; a.hidden = false; });
     document.querySelectorAll("[data-kofi-line]").forEach(function (s) { s.hidden = false; });
   }
 
