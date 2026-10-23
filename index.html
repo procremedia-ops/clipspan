@@ -198,6 +198,7 @@ kbd {
 .people b { font: 700 1.15rem var(--display); letter-spacing: -0.01em; }
 .people span { color: var(--muted); }
 .people .lead b { color: var(--pink); }
+.people .people-icon { box-sizing:content-box; display:block; width:28px; height:28px; padding:11px; margin-bottom:10px; border:1px solid var(--line); border-radius:14px; color:var(--pink); background:var(--tint); }
 
 /* Compare table */
 .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
@@ -417,11 +418,11 @@ footer a:hover { color: var(--pink); }
         <h2 id="who-title">Made for people who replay things</h2>
       </div>
       <ul class="people">
-        <li class="lead"><b>Musicians</b><span>learning a riff or a solo, bar by bar.</span></li>
-        <li><b>Language learners</b><span>drilling one phrase until it sticks.</span></li>
-        <li><b>Dancers and athletes</b><span>studying a move frame by frame.</span></li>
-        <li><b>Students</b><span>replaying the part of the lecture that matters.</span></li>
-        <li><b>Creators</b><span>saving a clip to react to, quote or edit.</span></li>
+        <li class="lead"><svg class="people-icon" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 18V5l12-2v13M9 8l12-2"/><ellipse cx="6" cy="18" rx="3" ry="3"/><ellipse cx="18" cy="16" rx="3" ry="3"/></svg><b>Musicians</b><span>learning a riff or a solo, bar by bar.</span></li>
+        <li><svg class="people-icon" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 13a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v2"/><path d="M12 9h7a2 2 0 0 1 2 2v10l-4-3h-5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2Z"/></svg><b>Language learners</b><span>drilling one phrase until it sticks.</span></li>
+        <li><svg class="people-icon" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="15" cy="4" r="2"/><path d="m12 8 4 4 5 1M3 9l5 1 4-2-2 7-5 6m5-6 5 2 2 4"/></svg><b>Dancers and athletes</b><span>studying a move frame by frame.</span></li>
+        <li><svg class="people-icon" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m2 9 10-5 10 5-10 5L2 9Zm4 2v6c3 3 9 3 12 0v-6m4-2v8"/></svg><b>Students</b><span>replaying the part of the lecture that matters.</span></li>
+        <li><svg class="people-icon" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="m3 8 18-4-1-3L2 5l1 3Zm4-4 3 3m3-5 3 3M10 12l5 3-5 3v-6Z"/></svg><b>Creators</b><span>saving a clip to react to, quote or edit.</span></li>
       </ul>
     </div>
   </section>
