@@ -271,6 +271,34 @@ footer a:hover { color: var(--pink); }
   .head, .pbtn.rec::before { animation: none; }
   .btn { transition: none; }
 }
+
+/* Product screenshot in an illustrative video-page context. */
+.youtube-demo { margin:0; min-width:0; }
+.yt-window { background:#0f0f0f; color:#f1f1f1; border:1px solid #373237; border-radius:16px; overflow:hidden; box-shadow:0 24px 55px -28px rgba(24,8,16,.5); font-family:Arial,sans-serif; }
+.yt-top { display:flex; align-items:center; gap:12px; padding:14px 16px; }
+.yt-menu { font-size:16px; color:#aaa; }
+.yt-brand { display:flex; align-items:center; gap:5px; font-size:16px; font-weight:700; letter-spacing:-.6px; }
+.yt-brand > span { display:grid; place-items:center; width:24px; height:17px; background:#f03; color:white; border-radius:5px; font-size:10px; }
+.yt-search { margin-left:auto; border:1px solid #333; border-radius:30px; padding:5px 14px; width:34%; color:#888; font-size:10px; }
+.yt-avatar { width:21px; height:21px; border-radius:50%; background:#8071ab; }
+.yt-content { padding:0 14px 16px; }
+.yt-video { position:relative; aspect-ratio:16/10; overflow:hidden; border-radius:9px; background:radial-gradient(ellipse at 20% 30%,#84654a,transparent 60%),linear-gradient(135deg,#39312b,#191d20); isolation:isolate; }
+.guitar-art { position:absolute; inset:0; overflow:hidden; opacity:.8; }
+.guitar-body { position:absolute; width:49%; height:105%; right:-4%; top:19%; border-radius:46%; background:radial-gradient(ellipse at 40% 40%,#171816 0 11%,#b88348 12% 15%,#5f3b20 16% 17%,#c89352 18% 60%,#6a3c21 75%); transform:rotate(-28deg); box-shadow:inset 0 0 24px #372416; }
+.guitar-neck { position:absolute; top:15%; left:7%; width:75%; height:18%; background:repeating-linear-gradient(90deg,transparent 0 9%,#c1b09a 9% 9.6%),linear-gradient(#382a22,#755336,#33261f); transform:rotate(29deg); transform-origin:left; border:3px solid #ad8858; }
+.guitar-strings { position:absolute; top:18%; left:7%; width:95%; height:12%; background:repeating-linear-gradient(0deg,transparent 0 16%,#d5c5a1 16% 18%); transform:rotate(29deg); transform-origin:left; opacity:.65; }
+.yt-lesson { position:absolute; top:8%; left:6%; color:#fff6e8; font-size:clamp(.65rem,1.25vw,1rem); font-weight:700; line-height:1.2; letter-spacing:.05em; text-shadow:0 2px 10px #0008; }
+.clipspan-panel { position:absolute; left:3%; bottom:9%; width:94%; height:auto; filter:drop-shadow(0 8px 12px #0006); }
+.yt-controls { position:absolute; bottom:0; left:0; right:0; padding:12px 10px 8px; background:linear-gradient(transparent,#000b); display:flex; justify-content:space-between; gap:8px; font-size:9px; }
+.yt-progress { position:absolute; top:6px; left:10px; right:10px; height:2px; background:#777; }
+.yt-progress::before { content:""; display:block; width:13%; height:100%; background:#f03; }
+.yt-below { padding-top:12px; }
+.yt-below strong { font-size:12px; line-height:1.4; display:block; }
+.yt-below > div { display:flex; align-items:center; gap:7px; margin-top:9px; font-size:9px; color:#ccc; }
+.yt-channel { width:22px; height:22px; border-radius:50%; background:linear-gradient(135deg,#a18568,#46362c); }
+.yt-pill { margin-left:auto; padding:5px 9px; border-radius:20px; background:#f1f1f1; color:#0f0f0f; font-weight:700; }
+@media(max-width:860px) { .yt-lesson { font-size:clamp(.7rem,2.8vw,1.2rem); } }
+
 </style>
 </head>
 <body>
@@ -334,23 +362,21 @@ footer a:hover { color: var(--pink); }
           <div class="cta" data-cta></div>
         </div>
         <!-- Demo slot: replace with the 30–60 s store demo video when it exists. Section heading then becomes "See it in 40 seconds". -->
-        <div class="demo-slot">
-          <div class="player" role="img" aria-label="A video with the stretch from 1:23 to 1:45 marked as a loop">
-            <div class="scene"></div><div class="strings"></div>
-            <div class="panel" aria-hidden="true">
-              <span class="name">Clipspan</span>
-              <span class="field">Start <span>1:23</span></span>
-              <span class="field">End <span>1:45</span></span>
-              <span class="pbtn loop">Loop</span>
-            </div>
-            <div class="bar" aria-hidden="true">
-              <div class="track"></div>
-              <div class="labels"><span>1:23</span><span>1:45</span></div>
-              <div class="span"></div>
-              <div class="head"></div>
+        <figure class="demo-slot youtube-demo">
+          <div class="yt-window" role="img" aria-label="Illustration of the Clipspan control panel over a guitar practice video on a YouTube-style page.">
+            <div class="yt-top" aria-hidden="true"><span class="yt-menu">☰</span><span class="yt-brand"><span>▶</span> YouTube</span><span class="yt-search">Search</span><span class="yt-avatar"></span></div>
+            <div class="yt-content" aria-hidden="true">
+              <div class="yt-video">
+                <div class="guitar-art"><div class="guitar-body"></div><div class="guitar-neck"></div><div class="guitar-strings"></div></div>
+                <span class="yt-lesson">ONE RIFF.<br>AS MANY REPLAYS<br>AS YOU NEED.</span>
+                <img class="clipspan-panel" src="assets/clipspan-panel.png" alt="" width="1984" height="793" loading="lazy">
+                <div class="yt-controls"><div class="yt-progress"></div><span>▶ &nbsp; ▷ &nbsp; ◖ &nbsp; 1:16 / 10:13</span><span>⚙ &nbsp; ⛶</span></div>
+              </div>
+              <div class="yt-below"><strong>Guitar practice · learn one riff at a time</strong><div><span class="yt-channel"></span><span>Practice session</span><span class="yt-pill">Subscribe</span></div></div>
             </div>
           </div>
-        </div>
+          <figcaption class="fine">The Clipspan panel, shown on an illustrative YouTube page. Loop and record without leaving your video.</figcaption>
+        </figure>
       </div>
     </div>
   </section>
