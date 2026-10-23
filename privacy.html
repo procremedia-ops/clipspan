@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Privacy policy – Clipspan</title>
+<meta name="description" content="How Clipspan handles extension data, launch email signups, website services, and your privacy choices.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Privacy policy – Clipspan">
+<meta property="og:description" content="Privacy information for the Clipspan extension and website.">
+
+<link rel="icon" type="image/png" sizes="32x32" href="icon32.png">
+<link rel="apple-touch-icon" href="icon128.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one column of full-width bands; the A–B loop bracket from the icon is the recurring motif. */
+:root {
+  --bg: #fbf7f8;
+  --surface: #ffffff;
+  --ink: #1c1418;
+  --muted: #6b5b63;
+  --line: #ecdfe4;
+  --pink: #e8336b;
+  --coral: #ff6a4d;
+  --on-accent: #ffffff;
+  --player: #141013;
+  --tint: #fdeef2;
+  --grad: linear-gradient(120deg, var(--pink), var(--coral));
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body: "Instrument Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --gutter-l: max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(16px, env(safe-area-inset-right, 0px));
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #120d10; --surface: #1c1519; --ink: #f6eef1; --muted: #b29fa8; --line: #33262d;
+    --pink: #ff4f82; --coral: #ff7d63; --on-accent: #1a0a10; --player: #0a0709; --tint: #261820;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #120d10; --surface: #1c1519; --ink: #f6eef1; --muted: #b29fa8; --line: #33262d;
+  --pink: #ff4f82; --coral: #ff7d63; --on-accent: #1a0a10; --player: #0a0709; --tint: #261820;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 1.0625rem/1.6 var(--body); }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--pink); outline-offset: 3px; border-radius: 6px; }
+
+.band { padding-left: var(--gutter-l); padding-right: var(--gutter-r); }
+.wrap { max-width: 1120px; margin: 0 auto; padding-block: clamp(56px, 9vw, 104px); }
+h1, h2, h3 { font-family: var(--display); line-height: 1.08; letter-spacing: -0.02em; text-wrap: balance; margin: 0; }
+h2 { font-size: clamp(1.9rem, 4.2vw, 2.9rem); font-weight: 700; }
+h3 { font-size: 1.2rem; font-weight: 700; letter-spacing: -0.01em; }
+p { margin: 0; }
+.lede { color: var(--muted); font-size: 1.15rem; max-width: 60ch; }
+.section-head { display: grid; gap: 14px; margin-bottom: 40px; max-width: 760px; }
+
+/* The bracket mark */
+.br { font-family: var(--display); font-weight: 800; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+kbd {
+  font: 500 0.82em var(--mono); padding: 2px 7px 3px; border-radius: 6px;
+  border: 1px solid var(--line); border-bottom-width: 2px; background: var(--surface); color: var(--ink); white-space: nowrap;
+}
+.tc { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+/* Top bar */
+.top .wrap { padding-block: 20px; display: flex; align-items: center; gap: 10px; }
+.logo { display: inline-flex; align-items: center; gap: 10px; font: 700 1.2rem var(--display); text-decoration: none; letter-spacing: -0.01em; }
+.logo img { width: 32px; height: 32px; border-radius: 8px; }
+
+/* Hero */
+.hero .wrap { padding-top: clamp(24px, 5vw, 56px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(32px, 5vw, 64px); align-items: center; }
+.hero h1 { font-size: clamp(2.5rem, 6.2vw, 4.6rem); font-weight: 800; letter-spacing: -0.035em; }
+.hero h1 .br { display: block; padding-right: .04em; }
+.hero .copy { display: grid; gap: 22px; min-width: 0; }
+.hero .lede { font-size: clamp(1.08rem, 1.6vw, 1.22rem); }
+
+/* CTA: a store button after launch, an email signup before */
+.cta { display: grid; gap: 10px; justify-items: start; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px; border: 0; cursor: pointer;
+  font: 600 1.05rem var(--body); color: var(--on-accent); background: var(--grad); text-decoration: none;
+  padding: 15px 24px; border-radius: 999px; box-shadow: 0 8px 24px -10px var(--pink);
+  transition: transform .15s ease, box-shadow .15s ease; white-space: nowrap;
+}
+.btn:hover { transform: translateY(-1px); box-shadow: 0 12px 28px -10px var(--pink); }
+.btn svg { width: 20px; height: 20px; flex: none; }
+.signup { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; max-width: 470px; }
+.signup input {
+  flex: 1 1 220px; min-width: 0; font: 400 1rem var(--body); color: var(--ink); background: var(--surface);
+  border: 1.5px solid var(--line); border-radius: 999px; padding: 14px 20px;
+}
+.signup input:focus { outline: none; border-color: var(--pink); }
+.signup .btn { flex: 0 0 auto; }
+.fine { font-size: .9rem; color: var(--muted); }
+.fine b { color: var(--ink); font-weight: 600; }
+.status { font-size: .95rem; font-weight: 500; min-height: 1.5em; }
+.status.ok { color: var(--pink); }
+
+/* Player mock: echoes the real Clipspan panel */
+.player {
+  position: relative; border-radius: 18px; overflow: hidden; background: var(--player);
+  aspect-ratio: 16 / 10; max-width: 100%; box-shadow: 0 30px 60px -30px rgba(40, 8, 20, .55); isolation: isolate;
+}
+.scene { position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(60% 70% at 72% 38%, rgba(255,106,77,.55), transparent 70%),
+    radial-gradient(50% 60% at 25% 70%, rgba(232,51,107,.5), transparent 70%),
+    linear-gradient(160deg, #2a1420, #0d090b);
+}
+.strings { position: absolute; inset: 0; z-index: -1; opacity: .35;
+  background: repeating-linear-gradient(172deg, transparent 0 34px, rgba(255,255,255,.5) 34px 35px);
+  mask-image: linear-gradient(90deg, transparent, #000 30%, #000 70%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 30%, #000 70%, transparent);
+}
+.panel {
+  position: absolute; top: 14px; left: 14px; right: 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+  padding: 10px 12px; border-radius: 12px; background: rgba(20,20,20,.85); color: #fff; font: 500 .82rem var(--body);
+  backdrop-filter: blur(6px);
+}
+.panel .name { font-weight: 700; margin-right: 4px; }
+.panel .field { display: inline-flex; align-items: center; gap: 6px; color: #c9d6ea; }
+.panel .field span { font: 500 .8rem var(--mono); color: #fff; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25); border-radius: 6px; padding: 3px 7px; }
+.panel .pbtn { border-radius: 999px; padding: 4px 11px; font-weight: 600; font-size: .78rem; }
+.pbtn.loop { background: #3ea6ff; color: #04121f; }
+.pbtn.rec { background: #ff4e45; color: #fff; display: inline-flex; align-items: center; gap: 6px; }
+.pbtn.rec::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #fff; animation: blink 1.2s steps(2, start) infinite; }
+.panel .time { margin-left: auto; font: 500 .8rem var(--mono); color: #fff; font-variant-numeric: tabular-nums; }
+.bar { position: absolute; left: 16px; right: 16px; bottom: 18px; height: 34px; }
+.track { position: absolute; left: 0; right: 0; top: 15px; height: 4px; border-radius: 4px; background: rgba(255,255,255,.25); }
+.span { position: absolute; top: 9px; height: 16px; left: 38%; width: 22%; background: rgba(255,79,130,.28); }
+.span::before, .span::after {
+  content: ""; position: absolute; top: -4px; bottom: -4px; width: 8px; border: 3px solid #ff5d86;
+}
+.span::before { left: -3px; border-right: 0; border-radius: 3px 0 0 3px; }
+.span::after { right: -3px; border-left: 0; border-radius: 0 3px 3px 0; }
+.head { position: absolute; top: 10px; width: 14px; height: 14px; margin-left: -7px; border-radius: 50%; background: #fff; left: 38%;
+  box-shadow: 0 0 0 4px rgba(255,255,255,.18); animation: loop 4.4s linear infinite; }
+.labels { position: absolute; top: -18px; left: 38%; width: 22%; display: flex; justify-content: space-between; font: 500 .72rem var(--mono); color: #fff; }
+.labels span { transform: translateX(-50%); }
+.labels span:last-child { transform: translateX(50%); }
+@keyframes loop { from { left: 38%; } to { left: 60%; } }
+@keyframes blink { to { opacity: .2; } }
+.saved {
+  position: absolute; right: 16px; bottom: 64px; display: inline-flex; align-items: center; gap: 8px;
+  background: #fff; color: #1c1418; border-radius: 10px; padding: 8px 12px; font: 600 .8rem var(--body);
+  box-shadow: 0 10px 24px -10px rgba(0,0,0,.6);
+}
+.saved small { font: 500 .72rem var(--mono); color: #6b5b63; }
+.saved i { width: 26px; height: 26px; border-radius: 6px; background: var(--grad); display: grid; place-items: center; color: #fff; font-style: normal; font-size: .7rem; }
+
+/* Problem line */
+.problem { background: var(--tint); }
+.problem .wrap { padding-block: clamp(40px, 6vw, 64px); }
+.problem p { font: 600 clamp(1.35rem, 2.8vw, 2rem)/1.3 var(--display); letter-spacing: -0.015em; max-width: 34ch; text-wrap: balance; }
+.problem em { font-style: normal; color: var(--pink); }
+
+/* How it works */
+.how-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 56px); align-items: center; }
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 26px; counter-reset: step; }
+.steps li { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 16px; align-items: start; counter-increment: step; }
+.steps li::before {
+  content: "[" counter(step) "]"; font: 800 1.35rem/1 var(--display); background: var(--grad);
+  -webkit-background-clip: text; background-clip: text; color: transparent; padding-top: 3px;
+}
+.steps h3 { margin-bottom: 4px; }
+.steps p { color: var(--muted); }
+.how .cta { margin-top: 36px; }
+.demo-slot { display: grid; gap: 10px; }
+.demo-slot .player { aspect-ratio: 16 / 9; }
+
+/* Benefits */
+.benefits { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 28px; display: grid; gap: 10px; align-content: start; }
+.card p { color: var(--muted); }
+.card .keys { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.formats { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.formats span { font: 500 .8rem var(--mono); padding: 2px 8px; border-radius: 6px; background: var(--tint); color: var(--ink); }
+
+/* Who it's for */
+.who { background: var(--surface); border-block: 1px solid var(--line); }
+.people { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0; border-top: 1px solid var(--line); }
+.people li { padding: 22px 20px 22px 0; border-bottom: 1px solid var(--line); display: grid; gap: 6px; }
+.people b { font: 700 1.15rem var(--display); letter-spacing: -0.01em; }
+.people span { color: var(--muted); }
+.people .lead b { color: var(--pink); }
+
+/* Compare table */
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
+table { width: 100%; min-width: 560px; border-collapse: collapse; font-size: 1rem; }
+th, td { text-align: left; padding: 16px 20px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+thead th { font: 600 .82rem var(--body); text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
+tbody th { font-weight: 600; }
+td { color: var(--muted); }
+.us { background: var(--tint); color: var(--ink); font-weight: 600; }
+thead .us { color: var(--pink); }
+.yes::before { content: "✓ "; color: var(--pink); font-weight: 700; }
+.no::before { content: "— "; }
+
+/* Proof + privacy */
+.duo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; }
+.maker { display: grid; gap: 18px; align-content: start; }
+.maker blockquote { margin: 0; font: 500 clamp(1.2rem, 2.2vw, 1.5rem)/1.4 var(--display); letter-spacing: -0.01em; }
+.maker cite { font-style: normal; color: var(--muted); font-size: .95rem; }
+.facts { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.facts li { font-weight: 600; font-size: .95rem; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); }
+.privacy { background: var(--player); color: #f6eef1; border-color: transparent; }
+.privacy p { color: #d9c9d0; }
+.privacy .note { font-size: .92rem; color: #b29fa8; border-top: 1px solid rgba(255,255,255,.14); padding-top: 14px; }
+
+/* FAQ */
+.faq { display: grid; gap: 0; max-width: 820px; border-top: 1px solid var(--line); }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary { cursor: pointer; list-style: none; padding: 20px 40px 20px 0; position: relative; font: 600 1.12rem var(--display); letter-spacing: -0.01em; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; position: absolute; right: 6px; top: 16px; font: 500 1.5rem var(--body); color: var(--pink); transition: transform .2s ease; }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq details p { padding: 0 0 22px; color: var(--muted); max-width: 64ch; }
+
+/* Final CTA */
+.final { background: var(--player); color: #fff; }
+.final .wrap { display: grid; gap: 20px; justify-items: center; text-align: center; }
+.final h2 { font-size: clamp(2.2rem, 6vw, 4rem); font-weight: 800; letter-spacing: -0.03em; }
+.final p.lede { color: #d9c9d0; }
+.final .cta { justify-items: center; }
+.final .signup { justify-content: center; }
+.final .signup input { background: #1f171b; border-color: #3a2b33; color: #fff; }
+.final .fine { color: #b29fa8; }
+.final .fine b { color: #fff; }
+.final .status.ok { color: #ff7d9e; }
+
+footer .wrap { padding-block: 28px; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; color: var(--muted); font-size: .92rem; }
+footer nav { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+footer a { text-decoration: none; }
+footer a:hover { color: var(--pink); }
+
+@media (max-width: 860px) {
+  .hero .wrap, .how-grid, .duo { grid-template-columns: minmax(0, 1fr); }
+  .benefits { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 520px) {
+  .panel { font-size: .74rem; gap: 6px; top: 10px; left: 10px; right: 10px; padding: 8px 10px; }
+  .panel .time { display: none; }
+  .saved { display: none; }
+  .signup .btn { flex: 1 1 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .head, .pbtn.rec::before { animation: none; }
+  .btn { transition: none; }
+}
+
+.top .back { margin-left:auto; font-size:.95rem; color:var(--muted); }
+.policy { max-width:800px; padding-top:40px; }
+.policy h1 { font-size:clamp(2.6rem,7vw,4.4rem); margin:12px 0 20px; }
+.policy > .fine { margin-top:18px; }
+.eyebrow { font:500 .8rem var(--mono); letter-spacing:.08em; color:var(--pink); }
+.contents { display:flex; flex-wrap:wrap; gap:10px 24px; padding:24px 0; margin:28px 0 40px; border-block:1px solid var(--line); font-size:.95rem; }
+.policy section { margin-top:38px; scroll-margin-top:24px; }
+.policy section h2 { font-size:clamp(1.4rem,3vw,1.8rem); margin-bottom:16px; }
+.policy section p, .policy li { color:var(--muted); }
+.policy section p + p { margin-top:14px; }
+.policy ul { padding-left:24px; } .policy li + li { margin-top:10px; }
+.policy strong { color:var(--ink); }
+.policy a { text-underline-offset:3px; overflow-wrap:anywhere; }
+</style></head><body><header class="band top"><div class="wrap"><a class="logo" href="./"><img src="icon128.png" alt="" width="32" height="32">Clipspan</a><a class="back" href="./">Back to home</a></div></header>
+<main class="band"><article class="policy wrap">
+<p class="eyebrow">CLIPSPAN / PRIVACY</p>
+<h1>Privacy policy</h1>
+<p class="lede">Your clips stay on your computer. Signing up for launch emails is a separate, optional choice.</p>
+<p class="fine">Last updated: <time datetime="2026-10-23">23 October 2026</time></p>
+<nav class="contents" aria-label="On this page"><a href="#extension">The extension</a><a href="#signup">Email signup</a><a href="#website">Website services</a><a href="#choices">Your choices</a><a href="#contact">Contact</a></nav>
+<section><h2>1. What this policy covers</h2><p>This policy covers the Clipspan Chrome extension and this website, maintained by the Clipspan project under the GitHub account <a href="https://github.com/procremedia-ops">procremedia-ops</a>. It explains the information involved when you use the extension, visit the website, or join the launch notification list. Websites where you watch videos have their own privacy policies.</p></section>
+<section id="extension"><h2>2. The Clipspan extension</h2><p>Clipspan is designed to loop selected portions of video and record clips inside your browser. The extension collects no personal data and does not send your recordings to Clipspan servers. You do not need a Clipspan account.</p><ul><li><strong>Video and audio:</strong> processed locally to provide looping and recording. Saved clips go to your computer through your browser’s download process.</li><li><strong>Page access:</strong> used to find and interact with the video player on the page you choose. Chrome may describe this permission as the ability to “read and change data on websites.”</li><li><strong>No extension analytics:</strong> Clipspan does not use the extension to collect browsing history, viewing activity, or advertising profiles.</li></ul><p>Permission to access a page does not mean its content is uploaded to us. Your browser, Chrome Web Store, and the video website may independently process information under their own policies.</p></section>
+<section id="signup"><h2>3. Optional launch emails</h2><p>If you enter your email address in a launch signup form, it is sent to <a href="https://buttondown.com/legal/privacy">Buttondown</a> to manage the subscription and send launch notifications. Submission continues on Buttondown, where you can see the result and any confirmation instructions. The landing page does not itself confirm that you have subscribed.</p><p>Buttondown may process subscription records and technical information associated with requests and email delivery under its policy. The extension’s “collects no data” statement applies to the extension; it does not mean that the optional mailing list stores no information.</p><p>Signing up is voluntary and is not required to use the extension. Use the unsubscribe link in a notification email to stop receiving messages. For deletion or other requests, see the contact section below and <a href="https://buttondown.com/legal/gdpr-eu-compliance">Buttondown’s subscriber privacy information</a>.</p></section>
+<section id="website"><h2>4. Website hosting, fonts, and cookies</h2><p>The current landing page does not include advertising pixels or analytics scripts, and its code does not set cookies or write to local storage. Services used to deliver the website still receive technical requests:</p><ul><li><strong>GitHub Pages:</strong> hosts this website. GitHub states that it logs visitor IP addresses for security purposes. See <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages#data-collection">GitHub Pages data collection</a> and the <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub Privacy Statement</a>.</li><li><strong>Google Fonts:</strong> the website loads fonts from Google’s servers. Your browser connects to Google to request the stylesheet and font files, which involves transmitting your IP address and request information. See <a href="https://fonts.google.com/faq">Google Fonts information</a> and <a href="https://policies.google.com/privacy">Google’s Privacy Policy</a>.</li><li><strong>Buttondown:</strong> receives your signup when you submit the form. Its pages and emails are governed by its own privacy and cookie policies.</li></ul><p>External links may take you to services that use their own cookies or collect information. Their policies apply when you visit them.</p></section>
+<section><h2>5. Why information is used and shared</h2><p>Local video processing provides the extension features you request. Email information supports the optional launch notification subscription. Hosting and font requests allow the website to load and help providers operate and protect their services.</p><p>Clipspan does not sell your personal information or use your recordings for advertising. Signup information is provided to Buttondown for the mailing list; technical website requests go to the providers described above. Information may also need to be disclosed where required by applicable law.</p></section>
+<section><h2>6. Retention, security, and processing locations</h2><p>You control downloaded clips and can delete them from your device. Removing the extension does not delete previously downloaded files.</p><p>Mailing-list records are held through Buttondown while needed to manage the subscription. Unsubscribing stops future notifications but is not necessarily the same as deleting every delivery or compliance record. Provider logs, backups, and retention periods are governed by the relevant provider policies; this policy does not promise a fixed deletion period for those systems.</p><p>Service providers may process information outside your country. Their policies describe their processing locations and safeguards. No internet transmission or storage system can be guaranteed completely secure. Do not send recordings or sensitive personal information through public support channels.</p></section>
+<section id="choices"><h2>7. Your choices and privacy requests</h2><ul><li>Use the extension without joining the mailing list.</li><li>Unsubscribe through the link in a notification email.</li><li>Delete downloaded clips using your device’s file manager.</li><li>Manage the extension’s site permissions, disable it, or remove it in Chrome’s extension settings.</li><li>Contact the project about access, correction, deletion, or other privacy requests.</li></ul><p>Depending on your location and the law that applies, you may have rights to access, correct, delete, or receive a copy of personal information, object to or restrict processing, withdraw consent, or complain to your local privacy authority. Requests involving provider-held information may also need to be directed to that provider. Withdrawing a subscription does not undo processing that already occurred.</p></section>
+<section><h2>8. Children’s information</h2><p>The launch signup is not intended to collect personal information from children. If you believe a child has submitted an email address without appropriate permission, contact the project so the subscription can be reviewed.</p></section>
+<section id="contact"><h2>9. Contact and policy updates</h2><p>For general privacy questions, use the <a href="https://github.com/procremedia-ops/clipspan/issues">Clipspan GitHub issue tracker</a>. Issues are public: do not post your email address, recordings, or other personal information there. For a subscription-specific request, reply to a Clipspan notification email or use Buttondown’s privacy request options linked above.</p><p>This policy may change as Clipspan or its service providers change. The date at the top identifies the latest update. Review this page for the current explanation of our practices.</p></section>
+</article></main>
+<footer class="band"><div class="wrap"><span>Clipspan is an independent project.</span><nav aria-label="Footer"><a href="./">Home</a><a href="privacy.html" aria-current="page">Privacy policy</a></nav></div></footer></body></html>
